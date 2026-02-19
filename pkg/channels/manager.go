@@ -176,6 +176,13 @@ func (m *Manager) initChannels() error {
 		}
 	}
 
+	if m.config.Channels.Web.Enabled {
+		logger.DebugC("channels", "Attempting to initialize Web channel")
+		web := NewWebChannel(&m.config.Channels.Web, m.bus)
+		m.channels["web"] = web
+		logger.InfoC("channels", "Web channel enabled successfully")
+	}
+
 	logger.InfoCF("channels", "Channel initialization completed", map[string]interface{}{
 		"enabled_channels": len(m.channels),
 	})
